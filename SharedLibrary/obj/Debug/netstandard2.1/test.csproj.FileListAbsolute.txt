@@ -1,0 +1,9 @@
+C:\Users\Adi\Desktop\Programare\C#\ProiectDAW\test\bin\Debug\netstandard2.1\test.deps.json
+C:\Users\Adi\Desktop\Programare\C#\ProiectDAW\test\bin\Debug\netstandard2.1\test.dll
+C:\Users\Adi\Desktop\Programare\C#\ProiectDAW\test\bin\Debug\netstandard2.1\test.pdb
+C:\Users\Adi\Desktop\Programare\C#\ProiectDAW\test\obj\Debug\netstandard2.1\test.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Adi\Desktop\Programare\C#\ProiectDAW\test\obj\Debug\netstandard2.1\test.AssemblyInfoInputs.cache
+C:\Users\Adi\Desktop\Programare\C#\ProiectDAW\test\obj\Debug\netstandard2.1\test.AssemblyInfo.cs
+C:\Users\Adi\Desktop\Programare\C#\ProiectDAW\test\obj\Debug\netstandard2.1\test.csproj.CoreCompileInputs.cache
+C:\Users\Adi\Desktop\Programare\C#\ProiectDAW\test\obj\Debug\netstandard2.1\test.dll
+C:\Users\Adi\Desktop\Programare\C#\ProiectDAW\test\obj\Debug\netstandard2.1\test.pdb
