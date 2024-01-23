@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Y8C3xHxdaL0UPX4t2DeNBqp43XnrVs352KfJ0/7lvcy0MycbPuklAzMo0B/19+O5AgdLbFZ5GM5St1/fKqarVw==",
+  "dgSpecHash": "dh+co7JYijQizjHEjZajp5P40Es9t0Vwa/mH32dy91/qfm9/0CowOFvbRwrNsnmt8nGLvnpdNhGXOk9fSLvDWA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Adi\\Desktop\\Programare\\C#\\ProiectDAW\\test\\SharedLibrary.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\Adi\\Desktop\\Programare\\C#\\ProiectDAW\\SharedLibrary\\SharedLibrary.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Adi\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
