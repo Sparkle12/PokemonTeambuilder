@@ -22,9 +22,9 @@ namespace Server
 
             builder.Services.AddDbContext<GameDbContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("Db")));
 
-            builder.Services.AddControllers().AddNewtonsoftJson(o => { o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore; });
-
-            builder.Services.AddScoped<PlayerService>();
+            builder.Services.AddControllers().AddNewtonsoftJson(
+                o => { o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore; }
+                );
 
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
@@ -32,6 +32,8 @@ namespace Server
             builder.Services.AddScoped<UserRepository>();
             builder.Services.AddScoped<TypeRepository>();
             builder.Services.AddScoped<MoveRepository>();
+            builder.Services.AddScoped<PokemonRepository>();
+            builder.Services.AddScoped<TeamRepository>();
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o =>
             {

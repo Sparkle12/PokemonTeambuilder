@@ -36,6 +36,21 @@ namespace Server.Migrations
                     b.ToTable("MovePokemon");
                 });
 
+            modelBuilder.Entity("PokemonTeam", b =>
+                {
+                    b.Property<int>("PokemonsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeamsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PokemonsId", "TeamsId");
+
+                    b.HasIndex("TeamsId");
+
+                    b.ToTable("PokemonTeam");
+                });
+
             modelBuilder.Entity("PTypePokemon", b =>
                 {
                     b.Property<int>("PokesId")
@@ -99,6 +114,10 @@ namespace Server.Migrations
                     b.Property<int>("Hp")
                         .HasColumnType("int");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("SpAttack")
                         .HasColumnType("int");
 
@@ -156,6 +175,19 @@ namespace Server.Migrations
                     b.ToTable("Roles");
                 });
 
+            modelBuilder.Entity("SharedLibrary.Team", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Teams");
+                });
+
             modelBuilder.Entity("SharedLibrary.User", b =>
                 {
                     b.Property<int>("Id")
@@ -173,6 +205,9 @@ namespace Server.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeamId")
                         .HasColumnType("int");
 
                     b.Property<string>("Username")
@@ -197,6 +232,21 @@ namespace Server.Migrations
                     b.HasOne("SharedLibrary.Pokemon", null)
                         .WithMany()
                         .HasForeignKey("pokemonsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PokemonTeam", b =>
+                {
+                    b.HasOne("SharedLibrary.Pokemon", null)
+                        .WithMany()
+                        .HasForeignKey("PokemonsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SharedLibrary.Team", null)
+                        .WithMany()
+                        .HasForeignKey("TeamsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

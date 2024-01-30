@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Server.Repository;
 using SharedLibrary;
+using SharedLibrary.DTOs;
 using SharedLibrary.Requests;
 using System.Security.Claims;
 
@@ -24,20 +25,20 @@ namespace Server.Controllers
 
         [HttpGet("{id}")]
 
-        public Move GetById([FromRoute] int id) 
+        public async Task<MoveDTO> GetById([FromRoute] int id) 
         {
-            return _moveRep.FindById(id);
+            return new MoveDTO(_moveRep.FindById(id));
         }
 
         [HttpGet("name/{name}")]
 
-        public Move GetByName([FromRoute] string name) 
+        public async Task<MoveDTO> GetByName([FromRoute] string name) 
         {
-            return _moveRep.FindByName(name);
+            return new MoveDTO(_moveRep.FindByName(name));
         }
 
         [HttpPost("create")]
-        public IActionResult CreateMove(CreateMoveRequest movereq) 
+        public async Task<IActionResult> CreateMove(CreateMoveRequest movereq) 
         {
             var currentUser = HttpContext.User;
             var currentUserRole = currentUser.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
@@ -52,8 +53,9 @@ namespace Server.Controllers
             if(_typeRep.FindById(movereq.type) == null) { return BadRequest("Move type dose not exist");}
 
             PType type = _typeRep.FindById(movereq.type);
+            Console.WriteLine(type.Name);
 
-            Move move = _moveRep.FindByName(movereq.Name);
+            Move move = new Move();
             move.Type = type;
             move.Name = movereq.Name;
             move.Power = movereq.Power;
@@ -63,12 +65,13 @@ namespace Server.Controllers
 
             _moveRep.Create(move);
             _moveRep.Save();
+            
 
             return Ok("Move has been created");
         }
 
         [HttpPost("update")]
-        public IActionResult UpdateMove(CreateMoveRequest movereq) 
+        public async Task<IActionResult> UpdateMove(CreateMoveRequest movereq) 
         {
             var currentUser = HttpContext.User;
             var currentUserRole = currentUser.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
@@ -80,14 +83,15 @@ namespace Server.Controllers
 
             if(_moveRep.FindByName(movereq.Name) != null)
             {
-                CreateMove(movereq);
+                return await CreateMove(movereq);
             }
 
             if (_typeRep.FindById(movereq.type) == null) { return BadRequest("Move type dose not exist"); }
 
             PType type = _typeRep.FindById(movereq.type);
 
-            Move move = new Move();
+            
+            Move move = _moveRep.FindByName(movereq.Name);
             move.Type = type;
             move.Name = movereq.Name;
             move.Power = movereq.Power;
@@ -101,7 +105,7 @@ namespace Server.Controllers
         }
 
         [HttpPost("delete/{id}")]
-        public IActionResult DeleteMoveById([FromRoute] int id) 
+        public async Task<IActionResult> DeleteMoveById([FromRoute] int id) 
         {
             var currentUser = HttpContext.User;
             var currentUserRole = currentUser.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;

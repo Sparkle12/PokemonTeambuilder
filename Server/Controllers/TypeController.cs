@@ -15,25 +15,29 @@ namespace Server.Controllers
         private readonly TypeRepository _typeRep;
         private readonly RoleRepository _roleRep;
 
-        public TypeController(TypeRepository type, RoleRepository role) { _typeRep = type; _roleRep = role; }
+        public TypeController(TypeRepository type, RoleRepository role) 
+        { 
+            _typeRep = type; 
+            _roleRep = role; 
+        }
 
         [HttpGet("{id}")]
 
-        public PType GetTypeById([FromRoute] int id) 
+        public async Task<PType> GetTypeById([FromRoute] int id) 
         {
             return _typeRep.FindById(id);
         }
 
         [HttpGet("name/{name}")]
         
-        public PType GetTypeByName([FromRoute] string name) 
+        public async Task<PType> GetTypeByName([FromRoute] string name) 
         {
             return _typeRep.FindByName(name);
         }
 
         [HttpPost("create")]
 
-        public IActionResult CreateType(PType type)
+        public async Task<IActionResult> CreateType(PType type)
         {
             var currentUser = HttpContext.User;
             var currentUserRole = currentUser.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
@@ -55,7 +59,7 @@ namespace Server.Controllers
 
         [HttpPost("update")]
 
-        public IActionResult UpdateType(PType type) 
+        public async Task<IActionResult> UpdateType(PType type) 
         {
             var currentUser = HttpContext.User;
             var currentUserRole = currentUser.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
@@ -67,7 +71,7 @@ namespace Server.Controllers
 
             if (_typeRep.FindByName(type.Name) == null) 
             {
-                return CreateType(type);
+                return await CreateType(type);
             }
 
             _typeRep.Update(type);
@@ -77,7 +81,7 @@ namespace Server.Controllers
         }
 
         [HttpPost("delete/{id}")]
-        public IActionResult DeleteTypeById([FromRoute] int id)
+        public async Task<IActionResult> DeleteTypeById([FromRoute] int id)
         {
             var currentUser = HttpContext.User;
             var currentUserRole = currentUser.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;

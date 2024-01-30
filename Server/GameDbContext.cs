@@ -15,6 +15,7 @@ namespace Server
         public DbSet<PType> Types { get; set; }
         public DbSet<Move> Moves { get; set; }
         public DbSet<Pokemon> Pokemons { get; set; }
+        public DbSet<Team> Teams { get; set; }
      
 
     }

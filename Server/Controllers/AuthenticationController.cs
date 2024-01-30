@@ -17,7 +17,7 @@ namespace Server.Controllers
             _authServ = authServ;
         }
         [HttpPost("register")]
-        public IActionResult Register(AuthenticationRequest request)
+        public async Task<IActionResult> Register(AuthenticationRequest request)
         {
             var (succes, content) = _authServ.Register(request.Username, request.Password);
 
@@ -29,7 +29,7 @@ namespace Server.Controllers
 
         [HttpPost("login")]
 
-        public IActionResult Login(AuthenticationRequest request)
+        public async Task<IActionResult> Login(AuthenticationRequest request)
         {
             var (succes, content) = _authServ.Login(request.Username, request.Password);
 

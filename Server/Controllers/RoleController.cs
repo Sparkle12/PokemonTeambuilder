@@ -19,7 +19,7 @@ namespace Server.Controllers
         }
 
         [HttpGet("{id}")]
-        public Role GetRole([FromRoute] int id)
+        public async Task<Role> GetRole([FromRoute] int id)
         {
             return _roleRep.FindById(id);
         }
@@ -37,7 +37,7 @@ namespace Server.Controllers
         }
 
         [HttpPost("create")]
-        public  IActionResult CreateRole(Role role)
+        public  async Task<IActionResult> CreateRole(Role role)
         {
             var currentUser = HttpContext.User;
             var currentUserRole = currentUser.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
@@ -57,7 +57,7 @@ namespace Server.Controllers
 
         [HttpPost("update")]
 
-        public IActionResult UpdateRole(Role role) 
+        public async Task<IActionResult> UpdateRole(Role role) 
         {
             var currentUser = HttpContext.User;
             var currentUserRole = currentUser.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
@@ -69,7 +69,7 @@ namespace Server.Controllers
 
             if (_roleRep.FindById(role.Id) == null)
             {
-                return CreateRole(role);
+                return await CreateRole(role);
             }
             else
             {

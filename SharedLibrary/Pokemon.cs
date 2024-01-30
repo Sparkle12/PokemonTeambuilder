@@ -8,6 +8,7 @@ namespace SharedLibrary
 {
     public class Pokemon : BaseClass
     {
+        public string Name { get; set; }
         public int Hp { get; set; }
         public int Attack { get; set; }
         public int SpAttack { get; set; }
@@ -17,6 +18,8 @@ namespace SharedLibrary
         
         public List<PType> Types { get; set; }
         public List<Move> Learnable {  get; set; }
+
+        public List<Team> Teams { get; set; }
         
         [NotMapped]
         public List<Move> learntMoves { get; set; }

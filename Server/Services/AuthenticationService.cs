@@ -29,7 +29,7 @@ namespace Server.Services
 
         public  (bool succes, string content) Register(string username, string password)
         {
-            if (_context.Users.Any(u => u.Username == username)) return (false, "Invalid username");
+            //if (_context.Users.Any(u => u.Username == username)) return (false, "Invalid username");
 
 
             var user = new User() { Username = username, PasswordHash = password ,Role = _roleRep.FindById(userRoleId)};
