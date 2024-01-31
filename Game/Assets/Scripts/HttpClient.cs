@@ -11,18 +11,22 @@ namespace Scripts
     public static class MyHttpClient
     {
 
-        public static async Task<T> Get<T>(string endpoint)
+        public static async Task<T> Get<T>(string endpoint,bool auth = false,string token = "")
         {
             var getRequest = CreateRequest(endpoint);
+            if (auth)
+                AttachHeader(getRequest, "Authorization", token);
             getRequest.SendWebRequest();
 
             while (!getRequest.isDone) await Task.Delay(10);
             return JsonConvert.DeserializeObject<T>(getRequest.downloadHandler.text);
         }
 
-        public static async Task<T> Post<T>(string endpoint,object payload)
+        public static async Task<T> Post<T>(string endpoint,object payload,bool auth = false,string token = "")
         {
-            var postRequest = CreateRequest(endpoint);
+            var postRequest = CreateRequest(endpoint,RequestType.POST,payload);
+            if (auth)
+                AttachHeader(postRequest, "Authorization", token);
             postRequest.SendWebRequest();
 
             while(!postRequest.isDone) await Task.Delay(10);
@@ -35,7 +39,7 @@ namespace Scripts
 
             if (data != null)
             {
-                var bodyRaw = Encoding.UTF8.GetBytes(JsonUtility.ToJson(data));
+                var bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(data));
                 request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             }
 

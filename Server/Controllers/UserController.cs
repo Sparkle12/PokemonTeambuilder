@@ -4,6 +4,7 @@ using Server.Repository;
 using SharedLibrary;
 using SharedLibrary.Models.DTOs;
 using SharedLibrary.Requests;
+using SharedLibrary.Responses;
 using System.Security.Claims;
 
 namespace Server.Controllers
@@ -67,10 +68,10 @@ namespace Server.Controllers
         }
 
         [HttpPost("update/team")]
-        public async Task<IActionResult> UpdateTeamId([FromBody] UpdateTeamRequest req)
+        public async Task<UpdateTeamResponse> UpdateTeamId([FromBody] UpdateTeamRequest req)
         {
             var user = _userRep.FindById(req.UserId);
-            if(user == null) { return BadRequest("User dose not exist"); }
+            if(user == null) { return new UpdateTeamResponse(-1,"User dose not exist"); }
 
             req.PokeId.Sort();
             List<Pokemon> pokemons = new List<Pokemon>();
@@ -79,20 +80,20 @@ namespace Server.Controllers
             {
                 var poke = _pokemonRep.FindById(index);
                 if (poke == null)
-                    return BadRequest("Pokemon dose not exist");
+                    return new UpdateTeamResponse(-1,"Pokemon dose not exist");
                 pokemons.Add(poke);
             }
 
             var team = _teamRep.FindByPokemons(pokemons);
 
-            if (team == null) { return BadRequest("Team dose not exist"); }
+            if (team == null) { return new UpdateTeamResponse(-1,"Team dose not exist"); }
 
             user.TeamId = team.Id;
 
             _userRep.Update(user);
             _userRep.Save();
 
-            return Ok("Team id has been updated");
+            return new UpdateTeamResponse(user.TeamId,"Team id has been updated");
 
         }
     }

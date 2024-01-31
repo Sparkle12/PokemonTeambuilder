@@ -14,7 +14,7 @@ namespace Server.Repository
                 _table = context.Set<T>();
             }
 
-        public async Task<List<T>> GetAll()
+        public virtual async Task<List<T>> GetAll()
         {
             return await _table.AsNoTracking().ToListAsync();
         }

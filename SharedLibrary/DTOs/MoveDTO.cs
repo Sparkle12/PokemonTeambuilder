@@ -6,6 +6,7 @@ namespace SharedLibrary.DTOs
 {
     public class MoveDTO
     {
+        public MoveDTO() { }
         public MoveDTO(Move move)
         {
             Type = move.Type.Name;

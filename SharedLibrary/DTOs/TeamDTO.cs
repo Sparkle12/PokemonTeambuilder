@@ -6,6 +6,7 @@ namespace SharedLibrary.DTOs
 {
     public class TeamDTO
     {
+        public TeamDTO() { }
         public TeamDTO(Team t) 
         {
             Id = t.Id;

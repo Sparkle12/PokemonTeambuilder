@@ -29,13 +29,11 @@ namespace Server.Controllers
 
         [HttpPost("login")]
 
-        public async Task<IActionResult> Login(AuthenticationRequest request)
+        public async Task<AuthenticationResponse> Login(AuthenticationRequest request)
         {
             var (succes, content) = _authServ.Login(request.Username, request.Password);
 
-            if (!succes) return BadRequest(content);
-
-            return Ok(new AuthenticationResponse() { Token = content});
+            return new AuthenticationResponse() { Token = content};
         }
     }
 }

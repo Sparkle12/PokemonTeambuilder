@@ -25,7 +25,20 @@ namespace Server.Controllers
             _typeRep = typeRep;
             _moveRep = moveRep;
         }
+        [HttpGet("all")]
+        public async Task<List<PokemonDTO>> GetAll()
+        {
+            var all = await _pokemonRep.GetAll();
 
+            List<PokemonDTO> pokes = new List<PokemonDTO>();
+
+            foreach (var pokemon in all) 
+            {
+                pokes.Add(new PokemonDTO(pokemon));
+            }
+
+            return pokes;
+        }
         [HttpGet("{id}")]
         public async Task<PokemonDTO> GetById([FromRoute] int id) 
         {

@@ -7,6 +7,10 @@ namespace Server.Repository
     {
         public PokemonRepository(GameDbContext context): base(context) { }
 
+        public override Task<List<Pokemon>> GetAll()
+        {
+            return _table.Include(p => p.Types).Include("Learnable.Type").AsNoTracking().ToListAsync();
+        }
         public override Pokemon FindById(int id)
         {
             return _table.Include(p => p.Types).Include("Learnable.Type").FirstOrDefault(p => p.Id == id);
